@@ -1,0 +1,38 @@
+{
+    "name": "orangesan/kafka_demo_app",
+    "description": "kafka_demo_app",
+    "authors": [
+        {
+            "name": "Sanal Ochirov",
+            "email": "ochirov_ss@ekb.sima-land.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "ext-json": "^1.5",
+        "ext-mbstring": "^7.1",
+        "slim/slim": "^3.11",
+        "nmred/kafka-php": "v0.2.0.8",
+        "symfony/console": "^4.1",
+        "symfony/dotenv": "^4.1",
+        "zendframework/zend-config-aggregator": "^1.1",
+        "monolog/monolog": "^1.23"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Api\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Api\\Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "app": "php bin/app.php --ansi",
+        "test": "phpunit --colors=always"
+    }
+}

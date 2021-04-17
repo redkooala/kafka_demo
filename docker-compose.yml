@@ -1,0 +1,37 @@
+version: '3'
+services:
+  php-cli:
+    build:
+      context: ./php/docker
+      dockerfile: php-cli.docker
+    volumes:
+      - ./php:/var/www/api
+    depends_on:
+      - kafka
+    working_dir: /var/www/api
+    tty: true
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+      - "9093:9093"
+      - "9094:9092"
+      - "9101:9101"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: test:1:1
+      KAFKA_LISTENERS: LISTENER_INTERN://kafka:9093,LISTENER_EXTERN://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_INTERN://kafka:9093,LISTENER_EXTERN://127.0.0.1:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_INTERN:PLAINTEXT,LISTENER_EXTERN:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_INTERN
+
